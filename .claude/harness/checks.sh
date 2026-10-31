@@ -44,6 +44,7 @@ fi
 
 # Device flows need a booted simulator or emulator, so they're opt-in.
 if [ "${HARNESS_DEVICE_FLOWS:-0}" = "1" ] && command -v maestro >/dev/null 2>&1 && [ -d .maestro ]; then
+  step "build and install the app" install_app
   step "device flows (Maestro)" maestro test .maestro
 else
   echo "== device flows: skipped (start a simulator and set HARNESS_DEVICE_FLOWS=1)" | tee -a "$log"

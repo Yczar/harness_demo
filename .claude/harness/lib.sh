@@ -31,6 +31,21 @@ require_run() {
   RUN_DIR="$HDIR/runs/$RUN"
 }
 
+# Build the current code and install it on the booted simulator or emulator,
+# so device flows never test a stale app. Fails if either step fails.
+install_app() {
+  if command -v xcrun >/dev/null 2>&1 && xcrun simctl list devices booted 2>/dev/null | grep -q Booted; then
+    flutter build ios --simulator --debug \
+      && xcrun simctl install booted "$ROOT/build/ios/iphonesimulator/Runner.app"
+  elif command -v adb >/dev/null 2>&1 && adb get-state >/dev/null 2>&1; then
+    flutter build apk --debug \
+      && adb install -r "$ROOT/build/app/outputs/flutter-apk/app-debug.apk"
+  else
+    echo "No booted simulator or emulator to install the app on." >&2
+    return 1
+  fi
+}
+
 # Pull a string field out of hook JSON on stdin without needing jq.
 # Good enough for simple fields like file_path and prompt.
 json_field() {
