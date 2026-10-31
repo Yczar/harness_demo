@@ -10,7 +10,18 @@ block() {
   exit 2
 }
 
-has() { printf '%s' "$input" | grep -qE -- "$1"; }
+# Check the command itself, not the text a `cat <<EOF` heredoc writes to a file,
+# so a review that mentions goldens isn't mistaken for touching them. Heredocs
+# fed to anything other than cat are still checked in full. If the input can't
+# be parsed, the whole of it is checked.
+cmd="$(printf '%s' "$input" | perl -MJSON::PP -0777 -ne '
+  my $c = eval { decode_json($_)->{tool_input}{command} };
+  $_ = defined $c ? $c : $_;
+  s/(\bcat\b[^\n]*<<-?\s*([\x27"]?)(\w+)\2[^\n]*)\n.*?\n[ \t]*\3[ \t]*(?=\n|$)/$1/gs;
+  print;
+')"
+has() { printf '%s' "$cmd" | grep -qE -- "$1"; }
+
 
 has '--update-goldens|accept-goldens\.sh' \
   && block "Only the human creates or updates golden files."
