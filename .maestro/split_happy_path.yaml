@@ -1,0 +1,12 @@
+# Happy path on a real simulator or emulator. Maestro finds Flutter widgets
+# through their Semantics labels, so every label here must exist in the app.
+appId: com.example.harness_demo
+---
+- launchApp
+- tapOn: "Bill total"
+- inputText: "100"
+- tapOn: "People"
+- eraseText
+- inputText: "4"
+- tapOn: "Calculate"
+- assertVisible: "Each person pays 27.50"

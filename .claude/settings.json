@@ -1,0 +1,78 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter test:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(dart format:*)",
+      "Bash(dart analyze:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git switch:*)",
+      "Bash(.claude/harness/start.sh:*)",
+      "Bash(.claude/harness/phase.sh:*)",
+      "Bash(.claude/harness/checks.sh:*)",
+      "Bash(.claude/harness/strike.sh:*)",
+      "Bash(.claude/harness/record.sh:*)",
+      "Bash(.claude/harness/finish.sh:*)",
+      "Bash(.claude/harness/status.sh:*)",
+      "Bash(maestro test:*)"
+    ],
+    "ask": [
+      "Bash(flutter pub add:*)",
+      "Bash(.claude/harness/abort.sh:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/key.properties)",
+      "Read(**/*.jks)",
+      "Read(**/*.keystore)",
+      "Read(**/*.p8)",
+      "Read(**/*.p12)",
+      "Read(**/*.mobileprovision)",
+      "Read(./fastlane/**)",
+      "Bash(git push:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(fastlane:*)",
+      "Bash(flutter pub publish:*)",
+      "Bash(dart pub publish:*)",
+      "Bash(.claude/harness/accept-goldens.sh:*)",
+      "Bash(.claude/harness/reset-strikes.sh:*)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/gate.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard-files.sh" }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard-bash.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/dart-feedback.sh" }
+        ]
+      }
+    ]
+  }
+}

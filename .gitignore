@@ -1,0 +1,24 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.iml
+.idea/
+
+# Secrets never go in the repo
+.env
+.env.*
+**/key.properties
+*.jks
+*.keystore
+
+# Harness: keep each run's spec, review and summary; ignore live state and media
+.harness/state
+.harness/state.tmp
+.harness/runs/*/approved
+.harness/runs/*/checks_passed
+.harness/runs/*/goldens_pending
+.harness/runs/*/checks.log
+.harness/runs/*/recording.mp4

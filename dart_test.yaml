@@ -1,0 +1,3 @@
+tags:
+  golden:
+    description: Pixel comparisons. Only the human accepts new or changed golden files.
