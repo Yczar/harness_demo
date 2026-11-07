@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../theme.dart';
+import '../theme_choice/theme_choice.dart';
+import '../theme_choice/theme_choice_section.dart';
 import 'split_calculator.dart';
 
 /// One screen: bill total, number of people, tip, and the amount each person pays.
@@ -12,7 +14,13 @@ import 'split_calculator.dart';
 /// these labels are part of the contract. shadcn's field label is not attached
 /// to its input, so [_NumberField] attaches it with a single Semantics label.
 class SplitScreen extends StatefulWidget {
-  const SplitScreen({super.key});
+  const SplitScreen(
+      {super.key,
+      required this.themeChoice,
+      required this.onThemeChoiceChanged});
+
+  final ThemeChoice themeChoice;
+  final ValueChanged<ThemeChoice> onThemeChoiceChanged;
 
   @override
   State<SplitScreen> createState() => _SplitScreenState();
@@ -94,7 +102,14 @@ class _SplitScreenState extends State<SplitScreen> {
                 ),
               ),
               const SizedBox(height: Spacing.xxl),
-              if (result != null) _ResultView(result: result),
+              if (result != null) ...[
+                _ResultView(result: result),
+                const SizedBox(height: Spacing.xxl),
+              ],
+              ThemeChoiceSection(
+                choice: widget.themeChoice,
+                onChanged: widget.onThemeChoiceChanged,
+              ),
             ],
           ),
         ),

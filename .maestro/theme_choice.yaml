@@ -1,0 +1,19 @@
+# Choose the Dark theme, then check the bill flow still works.
+appId: com.example.harness_demo
+---
+- launchApp
+- scrollUntilVisible:
+    element: "Dark"
+- tapOn: "Dark"
+- assertVisible: "Dark"
+- assertVisible: "Theme"
+- scrollUntilVisible:
+    element: "Bill total"
+    direction: UP
+- tapOn: "Bill total"
+- inputText: "100"
+- tapOn: "People"
+- eraseText
+- inputText: "4"
+- tapOn: "Calculate"
+- assertVisible: "Each person pays 27.50"
