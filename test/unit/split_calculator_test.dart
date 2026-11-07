@@ -18,7 +18,8 @@ void main() {
     });
 
     test('rejects a negative tip', () {
-      expect(splitBill(total: 50, people: 2, tipPercent: -5).error, SplitError.invalidTip);
+      expect(splitBill(total: 50, people: 2, tipPercent: -5).error,
+          SplitError.invalidTip);
     });
   });
 }

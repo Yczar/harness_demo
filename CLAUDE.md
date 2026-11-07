@@ -38,5 +38,6 @@ A tiny Flutter bill splitter. It exists to show the harness: I don't write the c
 - Never hide a failure: no `?? ''` over missing data, no `!` without a guarantee, no empty or catch-all `catch`. See `.claude/skills/no-error-masking/SKILL.md`.
 - Anything that can fail returns a result type, and the UI shows a message for every failure case.
 - No secrets in code, logs or tests. Never read `.env`, keystores or signing files.
-- No new packages without asking me.
+- UI uses shadcn_ui components and its theme tokens, not Material controls or hand-picked colours and font sizes (`ShadButton`, not `ElevatedButton`; `theme.textTheme.muted`, not `TextStyle(color: Colors.grey)`). See `.claude/skills/design-system/SKILL.md`.
+- No new packages without asking me. Approved so far: shadcn_ui.
 - Read `.harness/lessons.md` before starting any task. Those are rules I added after real mistakes.
